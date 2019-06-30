@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-sync
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: git-sync
+  template:
+    metadata:
+      labels:
+        app: git-sync
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: git-sync-volume
+              mountPath: /usr/share/nginx
+        - name: git-sync
+          image: gcr.io/google_containers/git-sync:v3.1.1
+          volumeMounts:
+            - name: git-sync-volume
+              mountPath: /sync
+          env:
+            - name: GIT_SYNC_REPO
+              value: https://github.com/reireias/git-sync-example.git
+            - name: GIT_SYNC_BRANCH
+              value: master
+            - name: GIT_SYNC_ROOT
+              value: /sync
+            - name: GIT_SYNC_DEST
+              value: html
+      volumes:
+        - name: git-sync-volume
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: git-sync
+  labels:
+    app: git-sync
+spec:
+  selector:
+    app: git-sync
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
