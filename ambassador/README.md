@@ -49,7 +49,7 @@ kubectl apply -f twemproxy.yml
 
 ```sh
 # access to nginx container
-kubectl exec -it ambassador-example --container nginx bash                                                             
+kubectl exec -it ambassador-example --container nginx bash 
 # install redis-cli
 apt update
 apt install -y redis-tools
