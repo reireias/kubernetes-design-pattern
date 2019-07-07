@@ -7,3 +7,5 @@ Contaier System Patterns in [Designing Distributed Systems](http://shop.oreilly.
 - [Sidecar Pattern](/sidecar/README.md)
 
 - [Ambassador Pattern](/ambassador/README.md)
+
+- [Adapter Pattern](/adapter/README.md)
