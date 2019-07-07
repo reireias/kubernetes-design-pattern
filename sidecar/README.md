@@ -30,7 +30,7 @@ git-sync sidecar
 
 - [git-sync](https://github.com/kubernetes/git-sync) syncs source code from git repository to local.
 
-- Both Nginx and git-sync containers mounts same volume stored html files.
+- Both Nginx and git-sync containers mount same volume stored html files.
 
 - git-sync pulls html file repository when pushed code to repository.
 

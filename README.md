@@ -5,3 +5,5 @@ Contaier System Patterns in [Designing Distributed Systems](http://shop.oreilly.
 ## Single Node Pattern
 
 - [Sidecar Pattern](/sidecar/README.md)
+
+- [Ambassador](/ambassador/README.md)
