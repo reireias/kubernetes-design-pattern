@@ -39,7 +39,8 @@ twemproxy ambassador
 
 ```sh
 # create configMap
-kubectl create configmap twem-config --from-file=./nutcracker.yml                                                      
+kubectl create configmap twem-config --from-file=./nutcracker.yml
+
 # create Pod and StatefulSet
 kubectl apply -f twemproxy.yml
 ```
