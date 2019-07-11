@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: healthcheck
+spec:
+  type: NodePort
+  ports:
+    - name: healthcheck
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: mysql
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:5.6
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+            - name: MYSQL_USER
+              value: user
+            - name: MYSQL_PASSWORD
+              value: password
+            - name: MYSQL_DATABASE
+              value: test
+          ports:
+            - name: mysql
+              containerPort: 3306
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+        - name: healthcheck
+          image: reireias/mysql-healthcheck
+          env:
+            - name: MYSQL_USER
+              value: user
+            - name: MYSQL_PASSWORD
+              value: password
+            - name: MYSQL_DATABASE
+              value: test
+            - name: MYSQL_QUERY
+              value: 'show databases;'
+            - name: MYSQL_HOST
+              value: mysql
+            - name: MYSQL_PORT
+              value: '3306'
+            - name: ADDRESS
+              value: 0.0.0.0:8080
+          ports:
+            - name: healthcheck
+              containerPort: 8080
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim

@@ -31,3 +31,27 @@ kubectl apply -f redis-with-exporter.yml
 # get metrics by redis-exporter
 curl $(minikube service exporter --url)/metrics
 ```
+
+
+## Example 2. mysql rich healthcheck
+
+```
+TODO: figure
+```
+
+- MySQL rich healthcheck using [reireias/mysql-healthcheck](https://github.com/reireias/mysql-healthcheck)
+
+- You can execute a SQL by accessing this container.
+
+### run on minikube
+```sh
+# create persistent volume
+kubectl apply -f mysql-pv.yml
+
+# create service and deployment
+kubectl apply -f mysql-with-ritch-healthcheck.yml
+
+# do healthcheck
+curl $(minikube service healthcheck --url)
+# return OK
+```
