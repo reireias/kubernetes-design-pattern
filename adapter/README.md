@@ -36,7 +36,20 @@ curl $(minikube service exporter --url)/metrics
 ## Example 2. mysql rich healthcheck
 
 ```
-TODO: figure
+                             +--------+
+                             | Client |
+                             +--------+
+                                  |
+                                  | access to /
+                                  |
++---------------------------------------------+
+|                                 |           |
+| +-------------+       +-------------------+ |
+| |    MySQL    | query | mysql-healthcheck | |
+| | <Container> |-------|    <Container>    | |
+| +-------------+       +-------------------+ |
+|                    <Pod>                    |
++---------------------------------------------+
 ```
 
 - MySQL rich healthcheck using [reireias/mysql-healthcheck](https://github.com/reireias/mysql-healthcheck)
